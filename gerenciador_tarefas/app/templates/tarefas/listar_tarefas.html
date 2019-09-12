@@ -1,42 +1,27 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Listagem de tarefas</title>
-    <link rel="stylesheet" href="{% static 'app/css/bootstrap.min.css' %}" />
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Gerenciador de Tarefas</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="{% url 'listar_tarefas' %}"
-              >Listar Tarefas <span class="sr-only">(current)</span></a
-            >
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <main class="container">
-      <h1>Listagem de tarefas</h1>
-      <ul>
-        <li>{{ nome_tarefa }}</li>
-      </ul>
-    </main>
-  </body>
-</html>
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<h1>Listagem de tarefas</h1>
+{% if tarefas|length > 0 %}
+    {% for tarefa in tarefas %}
+    <div class="card text-center mb-3">
+        <div class="card-header">{{ tarefa.get_prioridade_display }}</div>
+        <div class="card-body">
+            <h5 class="card-title">{{ tarefa.titulo }}</h5>
+            <p class="card-text">{{ tarefa.descricao }}</p>
+            <a href="{% url 'editar_tarefa' tarefa.id %}">Editar Tarefa</a>
+            <br>
+            <a style="color: red" href="{% url 'remover_tarefa' tarefa.id %}">Apagar Tarefa</a>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+<h4>Você não possui tarefas cadastradas.</h4>
+{% endif %}
+
+<a href="{% url 'cadastrar_tarefa' %}">
+    <input type="button" class="btn btn-primary mb-3" value="Cadastrar Tarefa">
+</a>
+
+{% endblock conteudo %}
