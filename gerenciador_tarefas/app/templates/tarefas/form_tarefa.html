@@ -6,17 +6,20 @@
 <form method="post">
     {% csrf_token %}
     <div class="form-group">
-        <label>Título: </label> {{ form_tarefa.titulo|addclass:'form-control' }}
+        <label>Título: </label>
+        {{ form_tarefa.titulo.errors }} {{ form_tarefa.titulo|addclass:'form-control' }}
     </div>
     <div class="form-group">
-        <label>Descrição: </label> {{ form_tarefa.descricao|addclass:'form-control' }}
+        <label>Descrição: </label> 
+        {{ form_tarefa.descricao.errors }} {{ form_tarefa.descricao|addclass:'form-control' }}
     </div>
     <div class="form-group">
-        <label>Data de expiração: </label> {{ form_tarefa.data_expiracao }}
+        <label>Data de expiração: </label> 
+        {{ form_tarefa.data_expiracao.errors }} {{ form_tarefa.data_expiracao }}
     </div>
-    
     <div class="form-group">
-        <label>Prioridade: </label> {{ form_tarefa.prioridade|addclass:'form-control' }}
+        <label>Prioridade: </label>
+        {{ form_tarefa.prioridade.errors }} {{ form_tarefa.prioridade|addclass:'form-control' }}
     </div>
     <div class="form-group">
         <input type="submit" value="Salvar">

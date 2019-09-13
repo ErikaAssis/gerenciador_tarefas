@@ -1,16 +1,17 @@
 from django.shortcuts import render, redirect
-from .forms import TarefaForm
-from .entidades.tarefa import Tarefa
-from .services import tarefa_service
+from django.contrib.auth.decorators import login_required
+from ..forms import TarefaForm
+from ..entidades.tarefa import Tarefa
+from ..services import tarefa_service
 
-# Create your views here. CONTROLLER
 
-
+@login_required()
 def listar_tarefas(request):
     return render(request, 'tarefas/listar_tarefas.html',
                   {'tarefas': tarefa_service.listar_tarefas()})
 
 
+@login_required()
 def cadastrar_tarefa(request):
     if request.method == 'POST':
         form_tarefa = TarefaForm(request.POST)
@@ -29,7 +30,7 @@ def cadastrar_tarefa(request):
     return render(request, 'tarefas/form_tarefa.html',
                   {'form_tarefa': form_tarefa})
 
-
+@login_required()
 def editar_tarefa(request, id):
     tarefa_bd = tarefa_service.listar_tarefa_id(id)
     form_tarefa = TarefaForm(request.POST or None, instance=tarefa_bd)
@@ -46,6 +47,7 @@ def editar_tarefa(request, id):
                   {'form_tarefa': form_tarefa})
 
 
+@login_required()
 def remover_tarefa(request, id):
     tarefa_bd = tarefa_service.listar_tarefa_id(id)
     if request.method == 'POST':

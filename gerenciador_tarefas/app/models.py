@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Tarefa(models.Model):
@@ -16,3 +17,4 @@ class Tarefa(models.Model):
         null=False,
         blank=False
     )
+    usuario = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
